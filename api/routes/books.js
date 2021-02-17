@@ -8,8 +8,13 @@ router.get ('/', (req,res,next)=>{
 });
 //POST Route for /books
 router.post ('/', (req,res,next)=>{
+    const book = {
+        title: req.body.title,
+        author: req.body.author
+    }
     res.status(200).json({
-        message: "POST books"
+        message: "POST books",
+        createdBook: book,
     });
 });
 
@@ -24,10 +29,15 @@ router.get ('/:bookId', (req,res,next)=>{
 
 //PUT Route for /books/id
 router.put ('/:bookId', (req,res,next)=>{
+    const book = {
+        title: req.body.title,
+        author: req.body.author
+    }
     const id = req.params.bookId
     res.status(200).json({
         message: "PUT books by ID",
-        id: id
+        id: id,
+        updatedBook: book
     });
 });
 
