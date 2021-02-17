@@ -1,0 +1,20 @@
+{
+  "name": "book-directory-api",
+  "version": "1.0.0",
+  "description": "A Node.js Restful API for a book directory",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "YES"
+  },
+  "keywords": [
+    "node",
+    "restful",
+    "api"
+  ],
+  "author": "Ernest Abah",
+  "license": "ISC"
+}
