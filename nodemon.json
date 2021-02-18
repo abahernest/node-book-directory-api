@@ -1,0 +1,6 @@
+{
+    "env" : {
+        "MONGO_ATLAS_PASSWORD":"kylegenius",
+        "PORT":8000
+    }
+}

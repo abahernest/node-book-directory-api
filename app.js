@@ -3,6 +3,14 @@ const app = express();
 const bookRoutes = require ('./api/routes/books');
 const morgan = require ('morgan');
 const bodyParser = require ('body-parser');
+const mongoose = require ('mongoose')
+
+
+//CONNECT DATABASE
+mongoose.connect ("mongodb+srv://abahernest:"+
+process.env.MONGO_ATLAS_PASSWORD+
+"@node-book-directory.fqqmu.mongodb.net/test", {useNewUrlParser: true, useUnifiedTopology: true});
+
 
 //MIDDLEWARE
 app.use (morgan('dev'));
