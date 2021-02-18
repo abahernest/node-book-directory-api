@@ -78,7 +78,7 @@ router.put ('/:bookId', async (req,res,next)=>{
     .then(result=>{
         console.log("Updated Successfully");
         res.status(200).json({
-            "message" : "Updated Successfully"
+            message : "Updated Successfully"
         });
     })
     .catch(err=>{
@@ -97,7 +97,7 @@ router.delete ('/:bookId', async (req,res,next)=>{
     .then(result =>{
         console.log("Successfully Deleted")
         res.status(200).json( {
-            "message": "Book Deleted"
+            message: "Book Deleted"
         } )
     })
     .catch(err=>{
