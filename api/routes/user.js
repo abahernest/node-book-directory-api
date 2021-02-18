@@ -4,6 +4,7 @@ const User = require ('../models/user');
 const mongoose = require ('mongoose');
 const bcrypt = require ('bcrypt');
 const jwt = require ('jsonwebtoken');
+const Authenticate = require ('../middleware/authentication');
 
 router.post ('/signup', async (req,res,next)=>{
     await User.find({email: req.body.email})
@@ -53,7 +54,7 @@ router.post ('/signup', async (req,res,next)=>{
 });
 
 
-router.get ('/', async (req,res,next)=>{
+router.get ('/', Authenticate, async (req,res,next)=>{
     await User.find()
     .select("_id email")
     .exec()

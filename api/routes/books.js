@@ -2,6 +2,7 @@ const express = require ('express');
 const router = express.Router();
 const Book = require ('../models/books');
 const mongoose = require ('mongoose');
+const Authenticate = require ('../middleware/authentication');
 
 //GET Route for /books
 router.get ('/', async (req,res,next)=>{
@@ -20,7 +21,7 @@ router.get ('/', async (req,res,next)=>{
   
 });
 //POST Route for /books
-router.post ('/', async (req,res,next)=>{
+router.post ('/', Authenticate, async (req,res,next)=>{
     const book = new Book({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
@@ -66,7 +67,7 @@ router.get ('/:bookId', async (req,res,next)=>{
 });
 
 //PUT Route for /books/id
-router.put ('/:bookId', async (req,res,next)=>{
+router.put ('/:bookId',Authenticate, async (req,res,next)=>{
     const id = req.params.bookId;
     const updateOptions = {};
     // const requestBody= Object.entries(req.body);
@@ -90,7 +91,7 @@ router.put ('/:bookId', async (req,res,next)=>{
 });
 
 //Delete Route for /books/id
-router.delete ('/:bookId', async (req,res,next)=>{
+router.delete ('/:bookId',Authenticate, async (req,res,next)=>{
     const id = req.params.bookId
     await Book.remove({_id:id})
     .exec()
