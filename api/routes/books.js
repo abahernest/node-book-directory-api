@@ -21,7 +21,7 @@ router.get ('/', async (req,res,next)=>{
   
 });
 //POST Route for /books
-router.post ('/', Authenticate, async (req,res,next)=>{
+router.post ('/',Authenticate, async (req,res,next)=>{
     const book = new Book({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
@@ -74,18 +74,23 @@ router.put ('/:bookId',Authenticate, async (req,res,next)=>{
     for (const options of req.body){
         updateOptions[options.key]=options.value;
     }
-    await Book.updateOne({_id:id}, {$set: updateOptions})
+    await Book.findByIdAndUpdate({_id:id}, {$set: updateOptions})
     .exec()
-    .then(result=>{
-        console.log("Updated Successfully");
-        res.status(200).json({
-            message : "Updated Successfully"
-        });
+    .then(updatedBook=>{
+        if(updatedBook){
+            console.log("Updated Successfully");
+            res.status(200).json(updatedBook);
+        }else{
+            console.log("ID not Found");
+            res.status(404).json({
+                message:"ID not Found"
+            })
+        }
     })
     .catch(err=>{
         console.log(err)
         res.status(500).json({
-            error:err
+            message: "Invalid ID"
         });
     });
 });
@@ -93,17 +98,24 @@ router.put ('/:bookId',Authenticate, async (req,res,next)=>{
 //Delete Route for /books/id
 router.delete ('/:bookId',Authenticate, async (req,res,next)=>{
     const id = req.params.bookId
-    await Book.remove({_id:id})
+    await Book.findByIdAndRemove({_id:id})
     .exec()
-    .then(result =>{
-        console.log("Successfully Deleted")
-        res.status(200).json( {
-            message: "Book Deleted"
-        } )
+    .then(book =>{
+        if (book){
+            console.log("Successfully Deleted")
+            res.status(200).json( {
+                message: "Book Deleted"
+            } )
+        }else{
+            console.log("ID not Found");
+            res.status(404).json({
+                message:"No object with that ID"
+            });
+        }   
     })
     .catch(err=>{
         res.status(500).json({
-            error:err
+            message:"Invalid ID"
         });
     });
 });
