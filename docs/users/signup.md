@@ -1,4 +1,4 @@
-# Login
+# Signup
 
 Register a user
 
