@@ -27,22 +27,32 @@ router.post ('/',Authenticate, async (req,res,next)=>{
         title: req.body.title,
         author: req.body.author
     });
-
-    await book
-    .save()
-    .then(result =>{
-        console.log(result);
-        res.status(201).json({
-        message: "New Book Added",
-        book: result,
-    });
+    await Book.findOne({title:book.title,author:book.author})
+    .exec()
+    .then(async doc=>{
+        if (doc===null){
+            await book
+            .save()
+            .then(result =>{
+                console.log(result);
+                res.status(201).json({
+                message: "New Book Added",
+                book: result,
+            });
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error:err
+                })
+            });
+        }else{
+            return res.status(409).json({
+                message: "Item already exist"
+            })
+        }
     })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error:err
-        })
-    });
+    
 });
 
 //GET Route for /books
@@ -67,32 +77,31 @@ router.get ('/:bookId', async (req,res,next)=>{
 });
 
 //PUT Route for /books/id
-router.put ('/:bookId',Authenticate, async (req,res,next)=>{
+router.put ('/:bookId',Authenticate, (req,res,next)=>{
     const id = req.params.bookId;
     const updateOptions = {};
     // const requestBody= Object.entries(req.body);
     for (const options of req.body){
         updateOptions[options.key]=options.value;
     }
-    await Book.findByIdAndUpdate({_id:id}, {$set: updateOptions})
-    .exec()
-    .then(updatedBook=>{
-        if(updatedBook){
-            console.log("Updated Successfully");
-            res.status(200).json(updatedBook);
-        }else{
-            console.log("ID not Found");
-            res.status(404).json({
-                message:"ID not Found"
-            })
-        }
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            message: "Invalid ID"
-        });
-    });
+    Book.findByIdAndUpdate({_id:id}, {$set: updateOptions},{new: true},(err,doc)=>{
+            if (err){
+                console.log("Invalid ID");
+                return res.status(500).json({
+                    message: "Invalid ID"
+                });
+            }
+            if (doc){
+                console.log("Updated Successfully");
+                return res.status(200).json(doc);
+            }
+            else {
+                console.log("ID not Found");
+                return res.status(404).json({
+                    message:"ID not Found"
+                });
+            }
+        })
 });
 
 //Delete Route for /books/id

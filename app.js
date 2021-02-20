@@ -10,7 +10,7 @@ const mongoose = require ('mongoose')
 //CONNECT DATABASE
 mongoose.connect ("mongodb+srv://abahernest:"+
 process.env.MONGO_ATLAS_PASSWORD+
-"@node-book-directory.fqqmu.mongodb.net/test", {useNewUrlParser: true, useUnifiedTopology: true});
+"@node-book-directory.fqqmu.mongodb.net/test", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
 
 //MIDDLEWARE

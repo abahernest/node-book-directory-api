@@ -86,3 +86,15 @@ Used to collect a Token for a registered User.
     "message": "User Not Authenticated!!!"
 }
 ```
+
+**Condition2** : If item already exist in database
+
+**Code** : `409 CONFLICT`
+
+**Content** :
+
+```json
+{
+    "message": "Item already exist"
+}
+```
