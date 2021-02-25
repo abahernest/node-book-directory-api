@@ -2,6 +2,7 @@ const express = require ('express');
 const app = express();
 const bookRoutes = require ('./api/routes/books');
 const userRoutes = require ('./api/routes/user');
+const sequelRoutes = require ('./api/routes/sequel');
 const morgan = require ('morgan');
 const bodyParser = require ('body-parser');
 const mongoose = require ('mongoose')
@@ -10,7 +11,7 @@ const mongoose = require ('mongoose')
 //CONNECT DATABASE
 mongoose.connect ("mongodb+srv://abahernest:"+
 process.env.MONGO_ATLAS_PASSWORD+
-"@node-book-directory.fqqmu.mongodb.net/test", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+"@node-book-directory.fqqmu.mongodb.net/test", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,useCreateIndex:true});
 
 
 //MIDDLEWARE
@@ -33,6 +34,7 @@ app.use ((req,res,next)=>{
 //ROUTES
 app.use ('/books',bookRoutes);
 app.use ('/users',userRoutes);
+app.use ('/sequel',sequelRoutes);
 
 
 //ERROR HANDLERS

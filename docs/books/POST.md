@@ -1,6 +1,6 @@
-# Login
+# Add A Book
 
-Used to collect a Token for a registered User.
+Used to add a book to database
 
 **URL** : `/books/`
 
@@ -13,7 +13,8 @@ Used to collect a Token for a registered User.
 ```json
 {
     "title": "[String]",
-    "author": "[String]"
+    "author": "[String]",
+    "sequel": "[ObjectId]
 }
 ```
 
@@ -22,7 +23,8 @@ Used to collect a Token for a registered User.
 ```json
 {
 	"title":"Walking Drugs",
-	"author":"Pablo Escobar"
+	"author":"Pablo Escobar",
+    "sequel": "60377ba6733d366539bfe9f8"
 }
 ```
 
@@ -36,9 +38,10 @@ Used to collect a Token for a registered User.
 {
     "message": "New Book Added",
     "book": {
-        "_id": "602e85869fea7d476239dff1",
-        "title": "Walking Drugs",
-        "author": "Pablo Escobar",
+        "_id": "6037851295e4736d5793c1b2",
+        "title":"Walking Drugs",
+        "author":"Pablo Escobar",
+        "sequel": "60377ba6733d366539bfe9f8",
         "__v": 0
     }
 }
@@ -54,24 +57,7 @@ Used to collect a Token for a registered User.
 
 ```json
 {
-    "error": {
-        "errors": {
-            "author": {
-                "name": "ValidatorError",
-                "message": "Path `author` is required.",
-                "properties": {
-                    "message": "Path `author` is required.",
-                    "type": "required",
-                    "path": "author"
-                },
-                "kind": "required",
-                "path": "author"
-            }
-        },
-        "_message": "Book validation failed",
-        "name": "ValidationError",
-        "message": "Book validation failed: author: Path `author` is required."
-    }
+    "error": "Book validation failed"
 }
 ```
 

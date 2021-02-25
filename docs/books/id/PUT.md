@@ -31,6 +31,10 @@ Update a book
 
 		"key": "author",
 		"value": "Melisa stone"
+	},
+	{
+		"key":"sequel",
+		"value": "60371c8dd4eaa22d3c514851"
 	}
 ]
 ```
@@ -43,13 +47,20 @@ Update a book
 
 ```json
 {
-    "message": "Updated Successfully"
+    "sequel": {
+        "_id": "60371c8dd4eaa22d3c514851",
+        "title": "white books",
+        "__v": 0
+    },
+    "_id": "6037851295e4736d5793c1b2",
+    "title": "sapphire",
+    "author": "melisa stone",
+    "__v": 0
 }
 ```
 
 ## Error Response
-
-**Condition1** : Invalid id (id is not complete)
+**Condition1** : Invalid Sequel id (id is not complete)
 
 **Code** : `500 INTERNAL SERVER ERROR`
 
@@ -57,11 +68,23 @@ Update a book
 
 ```json
 {
-    "message": "Invalid ID"
+    "error": "Cast to ObjectId failed for value \"60371c8dd4eaa22d3c5148\" at path \"_id\" for model \"Sequel\""
 }
 ```
 
-**Condition2** : Incorrect id
+**Condition2** : Wrong sequel id (id is not complete)
+
+**Code** : `404 NOT FOUND`
+
+**Content Example**:
+
+```json
+{
+    "message": "sequel ID not found"
+}
+```
+
+**Condition3** : Incorrect Book id
 
 **Code** : `404 NOT FOUND`
 
@@ -69,11 +92,23 @@ Update a book
 
 ```json
 {
-    "message": "iD not Found"
+    "message": "Book ID not Found"
 }
 ```
 
-**Condition3** : User isnt Authorized
+**Condition4** : Invalid Book id (id is not complete)
+
+**Code** : `500 INTERNAL SERVER ERROR`
+
+**Content Example**:
+
+```json
+{
+    "error": "Cast to ObjectId failed for value \"{ _id: '6037851295e4736d5793c1' }\" at path \"_id\" for model \"Book\""
+}
+```
+
+**Condition5** : User isnt Authorized
 
 **Code** : `401 UNAUTHORIZED`
 
